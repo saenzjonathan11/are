@@ -1,0 +1,109 @@
+@import "tailwindcss";
+
+/*
+ * BRAND TOKENS
+ * ---------------------------------------------------------------------------
+ * Change the brand here. Components only use the semantic names below
+ * (bg-ink, text-accent, border-line, ...), never raw hex values.
+ */
+:root {
+  --brand-ink: #1f2429; /* charcoal: text, header, footer */
+  --brand-ink-soft: #2e353c; /* raised surfaces on charcoal */
+  --brand-steel: #56606a; /* secondary text (AA on white and concrete) */
+  --brand-concrete: #eef0f2; /* page bands, image backgrounds */
+  --brand-line: #d3d9de; /* borders and dividers */
+  --brand-paper: #ffffff;
+  --brand-accent: #a9241e; /* logo red: primary actions (7.1:1 with white text) */
+  --brand-accent-hover: #861c17;
+  --brand-tag: #a6f24b; /* neon price sticker, like the tags in the store */
+  --brand-ok: #1d7a3e;
+  --brand-warn: #8a5a00;
+  --brand-bad: #b42318;
+  --focus: #1d4ed8;
+}
+
+@theme inline {
+  --color-ink: var(--brand-ink);
+  --color-ink-soft: var(--brand-ink-soft);
+  --color-steel: var(--brand-steel);
+  --color-concrete: var(--brand-concrete);
+  --color-line: var(--brand-line);
+  --color-paper: var(--brand-paper);
+  --color-accent: var(--brand-accent);
+  --color-accent-hover: var(--brand-accent-hover);
+  --color-tag: var(--brand-tag);
+  --color-ok: var(--brand-ok);
+  --color-warn: var(--brand-warn);
+  --color-bad: var(--brand-bad);
+
+  --font-sans: var(--font-barlow), ui-sans-serif, system-ui, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-display: var(--font-barlow-condensed), "Arial Narrow", ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 5.5rem;
+  }
+  body {
+    @apply bg-paper text-ink font-sans antialiased;
+    font-size: 1.0625rem;
+    line-height: 1.55;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display text-ink;
+    font-weight: 700;
+    line-height: 1.05;
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  :focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 2px;
+  }
+  .on-dark :focus-visible {
+    outline-color: #ffffff;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  .container-x {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Leaves room for the fixed mobile action bar */
+  .has-action-bar {
+    padding-bottom: calc(3.75rem + env(safe-area-inset-bottom));
+  }
+  @media (min-width: 768px) {
+    .has-action-bar {
+      padding-bottom: 0;
+    }
+  }
+
+  /* Neon starburst price tag, modeled on the store's handwritten tags */
+  .price-sticker {
+    clip-path: polygon(
+      50% 0%, 56.7% 7.5%, 65.5% 2.4%, 69.5% 11.7%, 79.4% 9.5%, 80.4% 19.6%, 90.5% 20.6%, 88.3% 30.5%,
+      97.6% 34.5%, 92.5% 43.3%, 100% 50%, 92.5% 56.7%, 97.6% 65.5%, 88.3% 69.5%, 90.5% 79.4%, 80.4% 80.4%,
+      79.4% 90.5%, 69.5% 88.3%, 65.5% 97.6%, 56.7% 92.5%, 50% 100%, 43.3% 92.5%, 34.5% 97.6%, 30.5% 88.3%,
+      20.6% 90.5%, 19.6% 80.4%, 9.5% 79.4%, 11.7% 69.5%, 2.4% 65.5%, 7.5% 56.7%, 0% 50%, 7.5% 43.3%,
+      2.4% 34.5%, 11.7% 30.5%, 9.5% 20.6%, 19.6% 19.6%, 20.6% 9.5%, 30.5% 11.7%, 34.5% 2.4%, 43.3% 7.5%
+    );
+    @apply bg-tag text-ink font-display font-bold;
+  }
+}
